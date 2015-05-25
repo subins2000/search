@@ -1,0 +1,16 @@
+DirectoryIndex index.php /inc/error.php
+ErrorDocument 403 /inc/error.php
+ErrorDocument 404 /inc/error.php
+ErrorDocument 405 /inc/error.php
+ErrorDocument 408 /inc/error.php
+ErrorDocument 410 /inc/error.php
+ErrorDocument 411 /inc/error.php
+ErrorDocument 412 /inc/error.php
+ErrorDocument 413 /inc/error.php
+ErrorDocument 414 /inc/error.php
+ErrorDocument 415 /inc/error.php
+ErrorDocument 500 /inc/error.php
+ErrorDocument 501 /inc/error.php
+ErrorDocument 502 /inc/error.php
+ErrorDocument 503 /inc/error.php
+ErrorDocument 506 /inc/error.php

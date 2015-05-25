@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /inc/
+Disallow: /cdn/
+Disallow: /crawler/
+Disallow: /url.php
+Disallow: /search.php
+Allow: /
