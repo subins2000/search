@@ -99,7 +99,7 @@ class SC {
     self::config();
   }
   
-  public function check($word){
+  public static function check($word){
     self::config();
 
     $url = self::$config['request_url'] . "?client=t&sl=en&tl=ml&hl=en&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&otf=2&rom=1&ssel=3&tsel=6&kc=2&tk=". self::rand(6) . "." . self::rand(5) ."&q=" . urlencode(strtolower($word));
