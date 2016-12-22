@@ -2,7 +2,18 @@
 PHPCrawl webcrawler library</title><meta
 name="keywords" content="framework, API, manual, class reference, classreference, documentation" /><meta
 name="description" content="The class reference contains the detailed description of how to use every class, method, and property." /><link
-rel="stylesheet" type="text/css" media="screen" href="style.css"> <script language="javascript">;function show_hide_node(e){if(document['expandimage'+e].src.search(/expand.gif/)>0){document['expandimage'+e].src=collapseImage.src}else{document['expandimage'+e].src=expandImage.src};cnt=document.getElementsByName(e).length;for(i=0;i<cnt;i++){node=document.getElementsByName(e)[i];if(node.style.display=='none'){node.style.display=''}else{node.style.display='none'}}};function init(){expandImage=new Image();expandImage.src='expand.gif';collapseImage=new Image();collapseImage.src='collapse.gif'};</script> </head><body
+rel="stylesheet" type="text/css" media="screen" href="style.css"> <script language="javascript">function show_hide_node(name)
+{if(document["expandimage"+name].src.search(/expand.gif/)>0)
+{document["expandimage"+name].src=collapseImage.src;}
+else
+{document["expandimage"+name].src=expandImage.src;}
+cnt=document.getElementsByName(name).length;for(i=0;i<cnt;i++)
+{node=document.getElementsByName(name)[i];if(node.style.display=="none")
+{node.style.display="";}
+else
+{node.style.display="none";}}}
+function init()
+{expandImage=new Image();expandImage.src="expand.gif";collapseImage=new Image();collapseImage.src="collapse.gif";}</script> </head><body
 onLoad="init()"><h1 id="menu_header">
 <span>
 Project:

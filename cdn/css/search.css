@@ -1,1 +1,40 @@
-.header .searchForm #query{width:400px !important}.header{text-align:center}.container{width:500px}.container .info{color:#808080}.results{width:500px;margin-top:25px}.result{margin:20px 0}.result .title{margin-bottom:0;font-size:17px}.result .url{font-size:13px;color:#006621;overflow:hidden;height:20px}.pages{width:500px;text-align:center;margin:0 auto 10px auto}.pages .button{margin:0 3px 3px}.pages .button.current{background:#000}
+.header .searchForm #query{
+ width:400px !important;
+}
+.header{
+ text-align:center;
+}
+.container{
+ width:500px;
+}
+.container .info{
+ color: gray;
+}
+.results{
+ width: 500px;
+ margin-top:25px;
+}
+.result{
+ margin:20px 0px;
+}
+.result .title{
+ margin-bottom: 0px;
+ font-size: 17px;
+}
+.result .url{
+ font-size: 13px;
+ color: #006621;
+ overflow:hidden;
+ height:20px;
+}
+.pages{
+ width: 500px;
+ text-align: center;
+ margin: 0px auto 10px auto;
+}
+.pages .button{
+ margin: 0px 3px 3px;
+}
+.pages .button.current{
+ background:black;
+}

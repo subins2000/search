@@ -1,0 +1,5 @@
+{
+    "require": {
+        "francium/process": "^0.3.2"
+    }
+}

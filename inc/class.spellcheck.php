@@ -84,6 +84,16 @@ class SC {
       }
     }
   }
+
+  public static function rand($length){
+    $result = '';
+
+    for($i = 0; $i < $length; $i++) {
+        $result .= mt_rand(0, 9);
+    }
+
+    return $result;
+  }
   
   public static function construct(){
     self::config();
@@ -91,7 +101,8 @@ class SC {
   
   public function check($word){
     self::config();
-    $url = self::$config['request_url'] . "?client=t&sl=en&tl=ml&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qc&dt=rw&dt=rm&dt=ss&dt=t&dt=at&ie=UTF-8&oe=UTF-8&otf=2&rom=1&ssel=4&tsel=3&kc=1&tk=520910|569655&q=" . urlencode(strtolower($word));
+
+    $url = self::$config['request_url'] . "?client=t&sl=en&tl=ml&hl=en&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&otf=2&rom=1&ssel=3&tsel=6&kc=2&tk=". self::rand(6) . "." . self::rand(5) ."&q=" . urlencode(strtolower($word));
     
     $response = self::url_get_contents($url);
     
