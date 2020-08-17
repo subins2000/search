@@ -12,3 +12,7 @@ Called by the name "Web Search" (WS) and it has its own crawler named Dingo! whi
 That's 6000 pages every hour !
 
 See Stats : http://search.subinsb.com/about/stats.php
+
+## SQL
+
+This repo was made from [this tutorial](https://subinsb.com/search-engine-in-php-part-1). SQL file can be found in [Part 2](http://subinsb.com/search-engine-in-php-part-2)
