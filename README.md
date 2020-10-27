@@ -13,6 +13,8 @@ That's 6000 pages every hour !
 
 See Stats : http://search.subinsb.com/about/stats.php
 
+UPDATE (2020): The site is down because I can't affort to host one, you can see the archive site here : https://web.archive.org/web/20170930165254/http://search.subinsb.com/
+
 ## SQL
 
 This repo was made from [this tutorial](https://subinsb.com/search-engine-in-php-part-1). SQL file can be found in [Part 2](http://subinsb.com/search-engine-in-php-part-2)
