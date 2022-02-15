@@ -26,7 +26,7 @@ class PHPCrawlerUtils
    */
   public static function splitURL($url)
   {
-    // Protokoll der URL hinzufügen (da ansonsten parse_url nicht klarkommt)
+    // Protokoll der URL hinzufÃ¼gen (da ansonsten parse_url nicht klarkommt)
     if (!preg_match("#^[a-z]+://# i", $url))
       $url = "http://" . $url;
     
@@ -71,13 +71,13 @@ class PHPCrawlerUtils
       $domain = substr($host, $pos+1);
     }
     
-    // DEFAULT VALUES für protocol, path, port etc. (wenn noch nicht gesetzt)
+    // DEFAULT VALUES fÃ¼r protocol, path, port etc. (wenn noch nicht gesetzt)
       
     // Wenn Protokoll leer -> Protokoll ist "http://"
     if ($protocol == "") $protocol="http://";
     
     // Wenn Port leer -> Port setzen auf 80 or 443
-    // (abhängig vom Protokoll)
+    // (abhÃ¤ngig vom Protokoll)
     if ($port == "")
     {
       if (strtolower($protocol) == "http://") $port=80;
@@ -87,7 +87,7 @@ class PHPCrawlerUtils
     // Wenn Pfad leet -> Pfad ist "/"
     if ($path=="") $path = "/";
     
-    // Rückgabe-Array
+    // RÃ¼ckgabe-Array
     $url_parts["protocol"] = $protocol;
     $url_parts["host"] = $host;
     $url_parts["path"] = $path;
@@ -523,7 +523,7 @@ class PHPCrawlerUtils
   {
     $args = func_get_args();
     
-    // Für jedes zu sortierende Feld ein eigenes Array bilden
+    // FÃ¼r jedes zu sortierende Feld ein eigenes Array bilden
     @reset($array);
     while (list($field) = @each($array)) 
     {
@@ -539,7 +539,7 @@ class PHPCrawlerUtils
       }
     }
 
-    // Argumente für array_multisort bilden
+    // Argumente fÃ¼r array_multisort bilden
     for ($x=1; $x<count($args); $x++)
     {
       if (is_string($args[$x]))
