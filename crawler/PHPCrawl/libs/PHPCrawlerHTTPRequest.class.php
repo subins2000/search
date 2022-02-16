@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Class for performing HTTP-requests.
  *
@@ -179,22 +179,32 @@ class PHPCrawlerHTTPRequest
   public function __construct()
   {
     // Init LinkFinder
-    if (!class_exists("PHPCrawlerLinkFinder")) include_once(dirname(__FILE__)."/PHPCrawlerLinkFinder.class.php");
-    $this->LinkFinder = new PHPCrawlerLinkFinder();
+    if (!class_exists("PHPCrawlerLinkFinder")) {
+            include_once(dirname(__FILE__) . "/PHPCrawlerLinkFinder.class.php");
+        }
+        $this->LinkFinder = new PHPCrawlerLinkFinder();
     
     // Init DNS-cache
-    if (!class_exists("PHPCrawlerDNSCache")) include_once(dirname(__FILE__)."/PHPCrawlerDNSCache.class.php");
-    $this->DNSCache = new PHPCrawlerDNSCache();
+    if (!class_exists("PHPCrawlerDNSCache")) {
+            include_once(dirname(__FILE__) . "/PHPCrawlerDNSCache.class.php");
+        }
+        $this->DNSCache = new PHPCrawlerDNSCache();
     
     // Cookie-Descriptor
-    if (!class_exists("PHPCrawlerCookieDescriptor")) include_once(dirname(__FILE__)."/PHPCrawlerCookieDescriptor.class.php");
-    
-    // ResponseHeader-class
-    if (!class_exists("PHPCrawlerResponseHeader")) include_once(dirname(__FILE__)."/PHPCrawlerResponseHeader.class.php");
-    
-    // PHPCrawlerHTTPProtocols-class
-    if (!class_exists("PHPCrawlerHTTPProtocols")) include_once(dirname(__FILE__)."/Enums/PHPCrawlerHTTPProtocols.class.php");
-  }
+    if (!class_exists("PHPCrawlerCookieDescriptor")) {
+            include_once(dirname(__FILE__) . "/PHPCrawlerCookieDescriptor.class.php");
+        }
+
+        // ResponseHeader-class
+    if (!class_exists("PHPCrawlerResponseHeader")) {
+            include_once(dirname(__FILE__) . "/PHPCrawlerResponseHeader.class.php");
+        }
+
+        // PHPCrawlerHTTPProtocols-class
+    if (!class_exists("PHPCrawlerHTTPProtocols")) {
+            include_once(dirname(__FILE__) . "/Enums/PHPCrawlerHTTPProtocols.class.php");
+        }
+    }
   
   /**
    * Sets the URL for the request.
@@ -260,9 +270,11 @@ class PHPCrawlerHTTPRequest
    */
   public function setLinkExtractionTags($tag_array)
   {
-    if (!is_array($tag_array)) return false;
-    
-    $this->LinkFinder->extract_tags = $tag_array;
+      if (!is_array($tag_array)) {
+            return false;
+        }
+
+        $this->LinkFinder->extract_tags = $tag_array;
     return true;
   }
   
@@ -273,9 +285,11 @@ class PHPCrawlerHTTPRequest
    */
   public function setFindRedirectURLs($mode)
   {
-    if (!is_bool($mode)) return false;
-    
-    $this->LinkFinder->find_redirect_urls = $mode;
+      if (!is_bool($mode)) {
+            return false;
+        }
+
+        $this->LinkFinder->find_redirect_urls = $mode;
     
     return true;
   }
@@ -322,9 +336,11 @@ class PHPCrawlerHTTPRequest
    */
   public function enableAggressiveLinkSearch($mode)
   {
-    if (!is_bool($mode)) return false;
-    
-    $this->LinkFinder->aggressive_search = $mode;
+      if (!is_bool($mode)) {
+            return false;
+        }
+
+        $this->LinkFinder->aggressive_search = $mode;
     return true;
   }
   
@@ -409,15 +425,16 @@ class PHPCrawlerHTTPRequest
       
     // Call header-check-callback
     $ret = 0;
-    if ($this->header_check_callback_function != null)
-      $ret = call_user_func($this->header_check_callback_function, $this->lastResponseHeader);
-    
-    // Check if content should be received
+    if ($this->header_check_callback_function != null) {
+            $ret = call_user_func($this->header_check_callback_function, $this->lastResponseHeader);
+        }
+
+        // Check if content should be received
     $receive = $this->decideRecevieContent($this->lastResponseHeader);
     
     if ($ret < 0 || $receive == false)
     {
-      @fclose($this->socket);
+      fclose($this->socket);
       $PageInfo->received = false;
       $PageInfo->links_found_url_descriptors = $this->LinkFinder->getAllURLs(); // Maybe found a link/redirect in the header
       $PageInfo->meta_attributes = $this->LinkFinder->getAllMetaAttributes();
@@ -440,21 +457,21 @@ class PHPCrawlerHTTPRequest
       $PageInfo->error_occured = true;
     }
     
-    @fclose($this->socket);
+    fclose($this->socket);
     
     // Complete ResponseObject
     $PageInfo->content = $response_content;
     $PageInfo->source = &$PageInfo->content;
     $PageInfo->received_completly = $PageInfo->received_completely;
     
-    if ($stream_to_file == true)
-    {
-      $PageInfo->received_to_file = true;
-      $PageInfo->content_tmp_file = $this->tmpFile;
-    }
-    else $PageInfo->received_to_memory = true;
-    
-    $PageInfo->links_found_url_descriptors = $this->LinkFinder->getAllURLs();
+    if ($stream_to_file == true) {
+            $PageInfo->received_to_file = true;
+            $PageInfo->content_tmp_file = $this->tmpFile;
+        } else {
+            $PageInfo->received_to_memory = true;
+        }
+
+        $PageInfo->links_found_url_descriptors = $this->LinkFinder->getAllURLs();
     $PageInfo->meta_attributes = $this->LinkFinder->getAllMetaAttributes();
     
     // Info about received bytes
@@ -519,10 +536,13 @@ class PHPCrawlerHTTPRequest
     PHPCrawlerBenchmark::start("connecting_server");
 
     // SSL or not?
-    if ($this->url_parts["protocol"] == "https://") $protocol_prefix = "ssl://";
-    else $protocol_prefix = "";
-    
-    // If SSL-request, but openssl is not installed
+    if ($this->url_parts["protocol"] === "https://") {
+            $protocol_prefix = "ssl://";
+        } else {
+            $protocol_prefix = "";
+        }
+
+        // If SSL-request, but openssl is not installed
     if ($protocol_prefix == "ssl://" && !extension_loaded("openssl"))
     {
       $error_code = PHPCrawlerRequestErrors::ERROR_SSL_NOT_SUPPORTED;
@@ -543,13 +563,23 @@ class PHPCrawlerHTTPRequest
       // If ssl -> perform Server name indication
       if ($this->url_parts["protocol"] == "https://")
       {
-        $context = stream_context_create(array('ssl' => array('SNI_server_name' => $this->url_parts["host"])));
-        $this->socket = @stream_socket_client($protocol_prefix.$ip_address.":".$this->url_parts["port"], $error_code, $error_str,
-                                              $this->socketConnectTimeout, STREAM_CLIENT_CONNECT, $context);
+      // $context = stream_context_create(array('ssl' => array('SNI_server_name' => $this->url_parts["host"])));
+      $context = stream_context_create([
+        'http' => ['method' => 'GET'],
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false
+        ]
+      ]);
+
+                $this->socket = stream_socket_client('ssl://'.$ip_address. ":" . $this->url_parts["port"],$error_code,$error_str,$this->socketConnectTimeout, STREAM_CLIENT_CONNECT,$context);
+                if ($this->socket === false) {
+                    throw new UnexpectedValueException("Failed to connect: $error_str");
+                }
       }
       else
       {
-        $this->socket = @stream_socket_client($protocol_prefix.$ip_address.":".$this->url_parts["port"], $error_code, $error_str,
+        $this->socket = stream_socket_client($protocol_prefix.$ip_address.":".$this->url_parts["port"], $error_code, $error_str,
                                               $this->socketConnectTimeout, STREAM_CLIENT_CONNECT); // NO $context here, memory-leak-bug in php v. 5.3.x!!
       }
     }
@@ -697,7 +727,7 @@ class PHPCrawlerHTTPRequest
    *
    * @return string  The response-content/source. May be emtpy if an error ocdured or data was streamed to the tmp-file.
    */
-  protected function readResponseContent($stream_to_file = false, &$error_code, &$error_string, &$document_received_completely)
+  protected function readResponseContent(&$error_code, &$error_string, &$document_received_completely, $stream_to_file = false)
   { 
     $this->content_bytes_received = 0;
     
@@ -733,16 +763,17 @@ class PHPCrawlerHTTPRequest
       // Check if content is gzip-encoded (check only first chunk)
       if ($gzip_encoded_content === null)
       {
-        if (PHPCrawlerUtils::isGzipEncoded($content_chunk))
-          $gzip_encoded_content = true;
-        else
-          $gzip_encoded_content = false;
-      }
+          if (PHPCrawlerUtils::isGzipEncoded($content_chunk)) {
+                    $gzip_encoded_content = true;
+                } else {
+                    $gzip_encoded_content = false;
+                }
+            }
       
       // Stream to file or store source in memory
       if ($stream_to_file == true)
       {
-        @fwrite($fp, $content_chunk);
+          fwrite($fp, $content_chunk);
       }
       else
       {
@@ -750,10 +781,11 @@ class PHPCrawlerHTTPRequest
       }
       
       // Decode gzip-encoded content when done with document
-      if ($document_completed == true && $gzip_encoded_content == true)
-        $source_complete = $source_portion = PHPCrawlerUtils::decodeGZipContent($source_complete);
-    
-      // Find links in portion of the source
+      if ($document_completed == true && $gzip_encoded_content == true) {
+                $source_complete = $source_portion = PHPCrawlerUtils::decodeGZipContent($source_complete);
+            }
+
+            // Find links in portion of the source
       if (($gzip_encoded_content == false && $stream_to_file == false && strlen($source_portion) >= 200000) || $document_completed == true)
       {
         if (PHPCrawlerUtils::checkStringAgainstRegexArray($this->lastResponseHeader->content_type, $this->linksearch_content_types))
@@ -766,9 +798,11 @@ class PHPCrawlerHTTPRequest
       }
     }
     
-    if ($stream_to_file == true) @fclose($fp);
-    
-    // Stop data-transfer-time benchmark
+    if ($stream_to_file === true) {
+            fclose($fp);
+        }
+
+        // Stop data-transfer-time benchmark
     PHPCrawlerBenchmark::stop("data_transfer_time");
     $this->data_transfer_time = PHPCrawlerBenchmark::getElapsedTime("data_transfer_time");
     
@@ -791,9 +825,11 @@ class PHPCrawlerHTTPRequest
     if ($this->http_protocol_version == PHPCrawlerHTTPProtocols::HTTP_1_1 && $this->lastResponseHeader->transfer_encoding == "chunked")
     {
       // Read size of next chunk
-      $chunk_line = @fgets($this->socket, 128);
-      if (trim($chunk_line) == "") $chunk_line = @fgets($this->socket, 128);
-      $current_chunk_size = hexdec(trim($chunk_line));
+      $chunk_line = fgets($this->socket, 128);
+      if (trim($chunk_line) === "") {
+                $chunk_line = fgets($this->socket, 128);
+            }
+            $current_chunk_size = hexdec(trim($chunk_line));
     }
     else
     {
@@ -812,12 +848,13 @@ class PHPCrawlerHTTPRequest
       
       // Set byte-buffer to bytes in socket-buffer (Fix for SSL-hang-bug #56, thanks to MadEgg!)
       $status = socket_get_status($this->socket);
-      if ($status["unread_bytes"] > 0)
-        $read_byte_buffer = $status["unread_bytes"];
-      else
-        $read_byte_buffer = 1024;
-      
-      // If chunk will be complete next read -> resize read-buffer to size of remaining chunk
+      if ($status["unread_bytes"] > 0) {
+                $read_byte_buffer = $status["unread_bytes"];
+            } else {
+                $read_byte_buffer = 1024;
+            }
+
+            // If chunk will be complete next read -> resize read-buffer to size of remaining chunk
       if ($bytes_received + $read_byte_buffer >= $current_chunk_size && $current_chunk_size > 0)
       {
         $read_byte_buffer = $current_chunk_size - $bytes_received;
@@ -825,7 +862,7 @@ class PHPCrawlerHTTPRequest
       }
       
       // Read line from socket
-      $line_read = @fread($this->socket, $read_byte_buffer); 
+      $line_read = fread($this->socket, $read_byte_buffer); 
       
       $source_chunk .= $line_read;
       $line_length = strlen($line_read);
@@ -885,14 +922,20 @@ class PHPCrawlerHTTPRequest
     $headerlines = array();
     
     // Methode(GET or POST)
-    if (count($this->post_data) > 0) $request_type = "POST";
-    else $request_type = "GET";
-    
-    // HTTP protocol
-    if ($this->http_protocol_version == PHPCrawlerHTTPProtocols::HTTP_1_1) $http_protocol_verison = "1.1";
-    else $http_protocol_verison = "1.0";
-    
-    if ($this->proxy != null)
+    if (count($this->post_data) > 0) {
+            $request_type = "POST";
+        } else {
+            $request_type = "GET";
+        }
+
+        // HTTP protocol
+        if ($this->http_protocol_version == PHPCrawlerHTTPProtocols::HTTP_1_1) {
+            $http_protocol_verison = "1.1";
+        } else {
+            $http_protocol_verison = "1.0";
+        }
+
+        if ($this->proxy != null)
     {
       // A Proxy needs the full qualified URL in the GET or POST headerline.
       $headerlines[] = $request_type." ".$this->UrlDescriptor->url_rebuild ." HTTP/1.0\r\n";
@@ -905,7 +948,8 @@ class PHPCrawlerHTTPRequest
     
     $headerlines[] = "Host: ".$this->url_parts["host"]."\r\n";
     
-    $headerlines[] = "User-Agent: ".str_replace("\n", "", $this->userAgentString)."\r\n";    $headerlines[] = "Accept: */*\r\n";
+    $headerlines[] = "User-Agent: ".str_replace("\n", "", $this->userAgentString)."\r\n";
+    $headerlines[] = "Accept: */*\r\n";
     
     // Request GZIP-content
     if ($this->request_gzip_content == true)
@@ -921,10 +965,11 @@ class PHPCrawlerHTTPRequest
     
     // Cookies
     $cookie_header = $this->buildCookieHeader();
-    if ($cookie_header != null) 
-      $headerlines[] = $this->buildCookieHeader();
-    
-    // Authentication
+    if ($cookie_header != null) {
+            $headerlines[] = $this->buildCookieHeader();
+        }
+
+        // Authentication
     if ($this->url_parts["auth_username"] != "" && $this->url_parts["auth_password"] != "")
     {
       $auth_string = base64_encode($this->url_parts["auth_username"].":".$this->url_parts["auth_password"]);
@@ -962,9 +1007,9 @@ class PHPCrawlerHTTPRequest
    * Prepares the given HTTP-query-string for the HTTP-request.
    *
    * HTTP-query-strings always should be utf8-encoded and urlencoded afterwards.
-   * So "/path/file?test=tatütata" will be converted to "/path/file?test=tat%C3%BCtata":
+   * So "/path/file?test=tatÃ¼tata" will be converted to "/path/file?test=tat%C3%BCtata":
    *
-   * @param stirng The quetry-string (like "/path/file?test=tatütata")
+   * @param stirng The quetry-string (like "/path/file?test=tatÃ¼tata")
    * @return string
    */
   protected function prepareHTTPRequestQuery($query)
@@ -1008,8 +1053,8 @@ class PHPCrawlerHTTPRequest
     $post_content = "";
     
     // Post-Data
-    @reset($this->post_data);
-    while (list($key, $value) = @each($this->post_data))
+    reset($this->post_data);
+    while (list($key, $value) = each($this->post_data))
     {
       $post_content .= "-----------------------------10786153015124\r\n";
       $post_content .= "Content-Disposition: form-data; name=\"".$key."\"\r\n\r\n";
@@ -1031,8 +1076,8 @@ class PHPCrawlerHTTPRequest
   {
     $cookie_string = "";
     
-    @reset($this->cookie_array);
-    while(list($key, $value) = @each($this->cookie_array))
+    reset($this->cookie_array);
+    while(list($key, $value) = each($this->cookie_array))
     {
       $cookie_string .= "; ".$key."=".$value."";
     }
@@ -1060,9 +1105,11 @@ class PHPCrawlerHTTPRequest
     $content_type = $responseHeader->content_type;
     
     // No Content-Type given
-    if ($content_type == null) return false;
-    
-    // Check against the given rules
+    if ($content_type == null) {
+            return false;
+        }
+
+        // Check against the given rules
     $receive = PHPCrawlerUtils::checkStringAgainstRegexArray($content_type, $this->receive_content_types);
     
     return $receive;
@@ -1076,15 +1123,19 @@ class PHPCrawlerHTTPRequest
    */
   protected function decideStreamToFile($response_header)
   {
-    if (count($this->receive_to_file_content_types) == 0) return false;
-    
-    // Get Content-Type from header
+      if (count($this->receive_to_file_content_types) === 0) {
+            return false;
+        }
+
+        // Get Content-Type from header
     $content_type = PHPCrawlerUtils::getHeaderValue($response_header, "content-type");
     
     // No Content-Type given
-    if ($content_type == null) return false;
-    
-    // Check against the given rules
+    if ($content_type === null) {
+            return false;
+        }
+
+        // Check against the given rules
     $receive = PHPCrawlerUtils::checkStringAgainstRegexArray($content_type, $this->receive_to_file_content_types);
     
     return $receive;
@@ -1161,13 +1212,13 @@ class PHPCrawlerHTTPRequest
    */
   public function setContentSizeLimit($bytes)
   {
-    if (preg_match("#^[0-9]*$#", $bytes))
-    {
-      $this->content_size_limit = $bytes;
-      return true;
+      if (preg_match("#^[0-9]*$#", $bytes)) {
+            $this->content_size_limit = $bytes;
+            return true;
+        } else {
+            return false;
+        }
     }
-    else return false;
-  }
   
   /**
    * Returns the global traffic this instance of the HTTPRequest-class caused so far.
@@ -1205,13 +1256,13 @@ class PHPCrawlerHTTPRequest
    */
   public function setHTTPProtocolVersion($http_protocol_version)
   {
-    if (preg_match("#[1-2]#", $http_protocol_version))
-    {
-      $this->http_protocol_version = $http_protocol_version;
-      return true;
+      if (preg_match("#[1-2]#", $http_protocol_version)) {
+            $this->http_protocol_version = $http_protocol_version;
+            return true;
+        } else {
+            return false;
+        }
     }
-    else return false;
-  }
   
   public function requestGzipContent($mode)
   {
@@ -1221,4 +1272,3 @@ class PHPCrawlerHTTPRequest
     }
   }
 }
-?>
