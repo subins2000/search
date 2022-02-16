@@ -45,8 +45,10 @@ class PHPCrawlerStatusHandler
     if ($this->write_status_to_file == true)
     {
       $this->crawlerStatus = PHPCrawlerUtils::deserializeFromFile($this->working_directory."crawlerstatus.tmp");
-      if ($this->crawlerStatus == null) $this->crawlerStatus = new PHPCrawlerStatus();
-    }
+      if ($this->crawlerStatus == null) {
+                $this->crawlerStatus = new PHPCrawlerStatus();
+            }
+        }
     
     return $this->crawlerStatus;
   }
@@ -97,9 +99,11 @@ class PHPCrawlerStatusHandler
       $crawler_status->links_followed++;
       
       // Increase documents_received-counter
-      if ($PageInfo->received == true) $crawler_status->documents_received++;
-        
-      // Increase bytes-counter
+      if ($PageInfo->received == true) {
+                $crawler_status->documents_received++;
+            }
+
+            // Increase bytes-counter
       $crawler_status->bytes_received += $PageInfo->bytes_received + $PageInfo->header_bytes_received;
       
       // Benchmarks
@@ -122,15 +126,21 @@ class PHPCrawlerStatusHandler
     }
     
     // Set abortreason
-    if ($abort_reason !== null) $crawler_status->abort_reason = $abort_reason;
-    
-    // Set first_content_url
-    if ($first_content_url !== null) $crawler_status->first_content_url = $first_content_url;
-    
-    // Set last request-time
-    if ($last_request_time !== null) $crawler_status->last_request_time = $last_request_time;
-    
-    // Write crawler-status back
+    if ($abort_reason !== null) {
+            $crawler_status->abort_reason = $abort_reason;
+        }
+
+        // Set first_content_url
+        if ($first_content_url !== null) {
+            $crawler_status->first_content_url = $first_content_url;
+        }
+
+        // Set last request-time
+        if ($last_request_time !== null) {
+            $crawler_status->last_request_time = $last_request_time;
+        }
+
+        // Write crawler-status back
     $this->setCrawlerStatus($crawler_status);
     
     // Remove semaphore/lock
@@ -142,4 +152,3 @@ class PHPCrawlerStatusHandler
     PHPCrawlerBenchmark::stop("updating_crawler_status");
   }
 }
-?>

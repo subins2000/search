@@ -20,4 +20,3 @@ class PHPCrawlerHTTPProtocols
    */
   const HTTP_1_1 = 2;
 }
-?>

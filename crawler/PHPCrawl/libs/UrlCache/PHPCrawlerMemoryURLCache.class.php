@@ -21,8 +21,8 @@ class PHPCrawlerMemoryURLCache extends PHPCrawlerURLCacheBase
     
     $max_pri_lvl = $this->getMaxPriorityLevel();
     
-    @reset($this->urls[$max_pri_lvl]);
-    while (list($key) = @each($this->urls[$max_pri_lvl]))
+    reset($this->urls[$max_pri_lvl]);
+    while (list($key) = each($this->urls[$max_pri_lvl]))
     {
       $UrlDescriptor_next = $this->urls[$max_pri_lvl][$key];
       unset($this->urls[$max_pri_lvl][$key]);
@@ -30,9 +30,11 @@ class PHPCrawlerMemoryURLCache extends PHPCrawlerURLCacheBase
     }
     
     // If there's no URL in the priority-level-array left -> unset
-    if (count($this->urls[$max_pri_lvl]) == 0) unset($this->urls[$max_pri_lvl]);
-    
-    //PHPCrawlerBenchmark::stop("getting_cached_url");
+    if (count($this->urls[$max_pri_lvl]) === 0) {
+            unset($this->urls[$max_pri_lvl]);
+        }
+
+        //PHPCrawlerBenchmark::stop("getting_cached_url");
      
     return $UrlDescriptor_next;
   }
@@ -46,8 +48,8 @@ class PHPCrawlerMemoryURLCache extends PHPCrawlerURLCacheBase
   {
     $URLs = array();
     
-    @reset($this->urls);
-    while (list($pri_lvl) = @each($this->urls))
+    reset($this->urls);
+    while (list($pri_lvl) = each($this->urls))
     {
       $cnt = count($this->urls[$pri_lvl]);
       for ($x=0; $x<$cnt; $x++)
@@ -76,24 +78,29 @@ class PHPCrawlerMemoryURLCache extends PHPCrawlerURLCacheBase
    */
   public function addURL(PHPCrawlerURLDescriptor $UrlDescriptor)
   { 
-    if ($UrlDescriptor == null) return;
-    
-    // Hash of the URL
+      if ($UrlDescriptor === null) {
+            return;
+        }
+
+        // Hash of the URL
     $map_key = $this->getDistinctURLHash($UrlDescriptor);
     
     // If URL already in cache -> abort
-    if($map_key != null && isset($this->url_map[$map_key])) return;
-    
-    // Retrieve priority-level
+    if ($map_key != null && isset($this->url_map[$map_key])) {
+            return;
+        }
+
+        // Retrieve priority-level
     $priority_level = $this->getUrlPriority($UrlDescriptor->url_rebuild);
     
     // Add URL to URL-Array
     $this->urls[$priority_level][] = $UrlDescriptor;
     
     // Add URL to URL-Map
-    if ($this->url_distinct_property != self::URLHASH_NONE)
-      $this->url_map[$map_key] = true;
-  }
+    if ($this->url_distinct_property != self::URLHASH_NONE) {
+            $this->url_map[$map_key] = true;
+        }
+    }
   
   /**
    * Adds an bunch of URLs to the url-cache
@@ -123,9 +130,12 @@ class PHPCrawlerMemoryURLCache extends PHPCrawlerURLCacheBase
    */
   public function containsURLs()
   {
-    if (count($this->urls) == 0) return false;
-    else return true;
-  }
+      if (count($this->urls) == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
   
   /**
    * Cleans up the cache after is it not needed anymore.
@@ -162,4 +172,3 @@ class PHPCrawlerMemoryURLCache extends PHPCrawlerURLCacheBase
     return $defined_priority_levels[0];
   }
 }
-?>
