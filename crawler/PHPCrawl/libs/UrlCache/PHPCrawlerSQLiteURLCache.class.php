@@ -106,9 +106,11 @@ class PHPCrawlerSQLiteURLCache extends PHPCrawlerURLCacheBase
    */
   public function addURL(PHPCrawlerURLDescriptor $UrlDescriptor)
   {
-    if ($UrlDescriptor == null) return;
-    
-    // Hash of the URL
+      if ($UrlDescriptor == null) {
+            return;
+        }
+
+        // Hash of the URL
     $map_key = md5($UrlDescriptor->url_rebuild);
     
     // Get priority of URL
@@ -196,12 +198,12 @@ class PHPCrawlerSQLiteURLCache extends PHPCrawlerURLCacheBase
     
     PHPCrawlerBenchmark::stop("checking_for_urls_in_cache");
     
-    if ($has_columns != false)
-    {
-      return true;
+    if ($has_columns != false) {
+            return true;
+        } else {
+            return false;
+        }
     }
-    else return false;
-  }
   
   /**
    * Cleans/purges the URL-cache from inconsistent entries.
@@ -295,4 +297,3 @@ class PHPCrawlerSQLiteURLCache extends PHPCrawlerURLCacheBase
     unlink($this->sqlite_db_file);
   }
 }
-?>

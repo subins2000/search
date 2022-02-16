@@ -166,4 +166,3 @@ class PHPCrawlerSQLiteCookieCache extends PHPCrawlerCookieCacheBase
     unlink($this->sqlite_db_file);
   }
 }
-?>

@@ -84,13 +84,14 @@ abstract class PHPCrawlerURLCacheBase
    */
   protected function getDistinctURLHash(PHPCrawlerURLDescriptor $UrlDescriptor)
   {
-    if ($this->url_distinct_property == self::URLHASH_URL)
-      return md5($UrlDescriptor->url_rebuild);
-    elseif ($this->url_distinct_property == self::URLHASH_RAWLINK)
-      return md5($UrlDescriptor->link_raw);
-    else
-      return null;
-  }
+      if ($this->url_distinct_property == self::URLHASH_URL) {
+            return md5($UrlDescriptor->url_rebuild);
+        } elseif ($this->url_distinct_property == self::URLHASH_RAWLINK) {
+            return md5($UrlDescriptor->link_raw);
+        } else {
+            return null;
+        }
+    }
   
   /**
    * Gets the priority-level of the given URL
@@ -138,4 +139,3 @@ abstract class PHPCrawlerURLCacheBase
     }
   }
 }
-?>

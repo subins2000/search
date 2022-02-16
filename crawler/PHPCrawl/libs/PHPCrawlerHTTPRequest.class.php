@@ -786,7 +786,7 @@ class PHPCrawlerHTTPRequest
             }
 
             // Find links in portion of the source
-      if (($gzip_encoded_content == false && $stream_to_file == false && strlen($source_portion) >= 200000) || $document_completed == true)
+      if (($gzip_encoded_content == false && $stream_to_file == false && strlen($source_portion) >= 20000000) || $document_completed == true)
       {
         if (PHPCrawlerUtils::checkStringAgainstRegexArray($this->lastResponseHeader->content_type, $this->linksearch_content_types))
         {
