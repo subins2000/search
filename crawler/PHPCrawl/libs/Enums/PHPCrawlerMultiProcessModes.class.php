@@ -27,4 +27,3 @@ class PHPCrawlerMultiProcessModes
    */
   const MPMODE_CHILDS_EXECUTES_USERCODE = 2;
 }
-?>

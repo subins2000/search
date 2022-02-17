@@ -34,4 +34,3 @@ abstract class PHPCrawlerCookieCacheBase
    */
   abstract public function cleanup();
 }
-?>

@@ -59,9 +59,13 @@ class PHPCrawlerProcessHandler
         $ct = file_get_contents($this->working_directory."pids");
         $child_pids = preg_split("#\n#", $ct, -1, PREG_SPLIT_NO_EMPTY);
         
-        if ($process_count == null) $try = false;
-        if (count($child_pids) == $process_count) $try = false;
-      }
+        if ($process_count === null) {
+                    $try = false;
+                }
+                if (count($child_pids) === $process_count) {
+                    $try = false;
+                }
+            }
       
       usleep(200000);
     }
@@ -103,4 +107,3 @@ class PHPCrawlerProcessHandler
     return false;
   }
 }
-?>

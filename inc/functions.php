@@ -50,7 +50,7 @@ function footer(){
 function getResults(){
  $q=$GLOBALS['q'];
  $p=$GLOBALS['p'];
- $start=($p-1)*10;
+ $start=($p-1)*50;
  if($q!=null){
   $starttime = microtime(true);
   $sql=$GLOBALS['dbh']->prepare("SELECT `title`, `url`, `description` FROM search WHERE `title` LIKE :q OR `url` LIKE :q OR `description` LIKE :q ORDER BY id");
@@ -65,12 +65,12 @@ function getResults(){
    $res=array();
    $res['count']=$sql->rowCount();
    $res['time']=round($duration, 4);
-   $limitedResults=array_slice($trs, $start, 10);
+   $limitedResults=array_slice($trs, $start, 50);
    foreach($limitedResults as $r){
     $res["results"][]=array($r['title'], $r['url'], $r['description']);
    }
    return $res;
   }
- }
+ }  echo $this->url_parts["host"].$this->url_parts["url"];
 }
 ?>
